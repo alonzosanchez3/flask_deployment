@@ -9,13 +9,18 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 # Optional: add contact me email functionality (Day 60)
 # import smtplib
 
 
 '''
-Make sure the required packages are installed: 
-Open the Terminal in PyCharm (bottom left). 
+Make sure the required packages are installed:
+Open the Terminal in PyCharm (bottom left).
 
 On Windows type:
 python -m pip install -r requirements.txt
@@ -28,7 +33,7 @@ This will install the packages from the requirements.txt for this project.
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv('APP_SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -53,7 +58,7 @@ gravatar = Gravatar(app,
                     base_url=None)
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db = SQLAlchemy()
 db.init_app(app)
 
